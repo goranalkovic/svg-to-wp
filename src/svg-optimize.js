@@ -1,4 +1,4 @@
-import { optimize } from './svgo';
+import { optimize, extendDefaultPlugins } from './svgo';
 
 export const svgOptimize = (input, options) => {
     const {
@@ -10,6 +10,19 @@ export const svgOptimize = (input, options) => {
 
     const result = optimize(input, {
         multipass: true,
+        plugins: extendDefaultPlugins([{
+                name: 'cleanupListOfValues',
+                active: false
+            },
+            {
+                name: 'convertStyleToAttrs',
+                active: false
+            },
+            {
+                name: 'removeViewBox',
+                active: false
+            }
+        ])
     });
 
     const { data } = result;
