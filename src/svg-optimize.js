@@ -6,6 +6,7 @@ export const svgOptimize = (input, options) => {
         replaceColor,
         jsxifyAttributes,
         doubleToSingleQuotes,
+        addMissingFillNone,
     } = options;
 
     const result = optimize(input, {
@@ -47,9 +48,9 @@ export const svgOptimize = (input, options) => {
     }
 
     if (jsxifyAttributes) {
-        const matchAll = output.matchAll(/([a-z]+\-[a-z]+)/g);
+        const allMatches = output.matchAll(/([a-z]+\-[a-z]+)/g);
 
-        for (const match of matchAll) {
+        for (const match of allMatches) {
             const startIndex = match.index;
             const endIndex = match.index + match[0].length;
             const targetWord = snakeToCamel(match[0]);
@@ -58,6 +59,34 @@ export const svgOptimize = (input, options) => {
                 endIndex
             )}`;
         }
+    }
+
+    if (addMissingFillNone) {
+        const skeleton = output.match(/(<svg.+'>|<\/svg>)/g);
+        const beginning = skeleton[0];
+        const end = skeleton[1];
+
+        let middle = '';
+
+        const outputWithoutSkeleton = output.replace(beginning, '').replace(end, '').replaceAll('><', '>{}<');
+
+        console.log(outputWithoutSkeleton);
+
+        const allMatches = outputWithoutSkeleton.split('{}');
+
+        for (const match of allMatches) {
+            if (match.includes('fill=')) {
+                middle += match;
+                continue;
+            }
+
+            console.log(match);
+            middle += match.replace(/\/>$/g, " fill='none'\\>");
+        }
+
+        console.log(middle);
+
+        output = `${beginning}${middle}${end}`.replaceAll('  ', ' ');
     }
 
     return output;

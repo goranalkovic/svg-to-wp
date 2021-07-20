@@ -8,12 +8,15 @@
   let finalOutput = '';
   let inputInvalid = false;
 
+  currentSvgString = `<svg viewBox="0 0 20 20" width="400" height="180"><path fill="#0D3636" stroke='currentColor' stroke-width="1.5" d="M50 20h150v150H50z"/><path stroke='currentColor' stroke-width="1.5" d="M50 20h150v150H50z"/></svg>`;
+
   let options = {
     colorToReplace: '#0D3636',
     replaceColor: true,
     jsxifyAttributes: false,
     doubleToSingleQuotes: true,
     batch: false,
+    addMissingFillNone: true,
   };
 
   let showCopiedToast = false;
@@ -112,6 +115,18 @@
         <small>Converts double (") to single quotes (')</small>
       </div>
     </label>
+    
+    <label>
+      <input
+        type="checkbox"
+        bind:checked={options.addMissingFillNone}
+        on:click={() => setTimeout(optimizeSvg, 250)}
+      />
+      <div>
+        Add missing fills <br />
+        <small>Adds <code>fill='none'</code> to elements which don't have it set.</small>
+      </div>
+    </label>
 
     <label>
       <input
@@ -162,7 +177,7 @@
     {#if finalOutput?.length}
       <h3>Output</h3>
       <small><i>Click to copy</i></small>
-      <pre on:click={copyToClipboard}>{finalOutput}</pre>
+      <code class="output" on:click={copyToClipboard}>{finalOutput}</code>
       {#if showCopiedToast}
         <p transition:slide>Copied to clipboard!</p>
       {/if}
@@ -171,6 +186,9 @@
 </main>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
   .error {
     border-color: red;
     outline-color: red;
@@ -180,20 +198,22 @@
     color: red;
   }
 
-  pre {
+  .output {
+    margin-top: 0.5rem;
+    display: block;
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 0.6rem;
     border: 1px solid grey;
-    width: max-content;
+    width: 100%;
     transition: 0.3s background-color ease-out;
   }
 
-  pre:hover {
+  .output:hover {
     background-color: honeydew;
   }
 
-  pre,
+  .output,
   textarea {
     font-size: 0.85rem;
     font-family: monospace;
@@ -222,6 +242,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+  }
+
+  code {
+    font-size: 0.8rem;
   }
 
   h3 {
