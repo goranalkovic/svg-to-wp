@@ -8,8 +8,6 @@
   let finalOutput = '';
   let inputInvalid = false;
 
-  currentSvgString = `<svg viewBox="0 0 20 20" width="400" height="180"><path fill="#0D3636" stroke='currentColor' stroke-width="1.5" d="M50 20h150v150H50z"/><path stroke='currentColor' stroke-width="1.5" d="M50 20h150v150H50z"/></svg>`;
-
   let options = {
     colorToReplace: '#0D3636',
     replaceColor: true,
