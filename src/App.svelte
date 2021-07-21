@@ -43,7 +43,7 @@
       finalOutput = '';
       for (const itemToProcess of splitString) {
         const optimized = svgOptimize(itemToProcess, passedOptions);
-        finalOutput += `"${optimized}",\n`;
+        finalOutput += options.jsxifyAttributes ? `: ${optimized},\n` : `"" : "${optimized}",\n`;
       }
     } else {
       finalOutput = svgOptimize(currentSvgString, passedOptions);
