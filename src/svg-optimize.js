@@ -50,14 +50,18 @@ export const svgOptimize = (input, options) => {
     if (jsxifyAttributes) {
         const allMatches = output.matchAll(/([a-z]+\-[a-z]+)/g);
 
+        let count = 0;
+
         for (const match of allMatches) {
             const startIndex = match.index;
             const endIndex = match.index + match[0].length;
             const targetWord = snakeToCamel(match[0]);
 
-            output = `${output.slice(0, startIndex)}${targetWord}${output.slice(
-                endIndex
+            output = `${output.slice(0, startIndex - cooount)}${targetWord}${output.slice(
+                endIndex - count
             )}`;
+
+            count++;
         }
     }
 
