@@ -57,7 +57,7 @@ export const svgOptimize = (input, options) => {
             const endIndex = match.index + match[0].length;
             const targetWord = snakeToCamel(match[0]);
 
-            output = `${output.slice(0, startIndex - cooount)}${targetWord}${output.slice(
+            output = `${output.slice(0, startIndex - count)}${targetWord}${output.slice(
                 endIndex - count
             )}`;
 
