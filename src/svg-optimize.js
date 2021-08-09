@@ -85,10 +85,8 @@ export const svgOptimize = (input, options) => {
             }
 
             console.log(match);
-            middle += match.replace(/\/>$/g, " fill='none'/>");
+            middle += match.replace(/\/>$/g, doubleToSingleQuotes ? " fill='none'/>" : " fill=\"none\"/>");
         }
-
-        console.log(middle);
 
         output = `${beginning}${middle}${end}`.replaceAll('  ', ' ');
     }
