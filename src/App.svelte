@@ -261,6 +261,11 @@
     padding: 0.1rem;
     border: 1px solid var(--muted-color);
     border-radius: 0.4rem;
+    
+  }
+  :global(.svg-preview-item svg) {
+    width: 100%;
+    height: 100%;
   }
 
   .svg-preview-title {
