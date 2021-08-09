@@ -97,6 +97,6 @@ export const svgOptimize = (input, options) => {
 const snakeToCamel = (str) =>
     str
     .toLowerCase()
-    .replace(/([-_][a-z])/g, (group) =>
+    .replaceAll(/([-_][a-z])/g, (group) =>
         group.toUpperCase().replace('-', '').replace('_', '')
     );
