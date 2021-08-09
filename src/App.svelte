@@ -97,6 +97,15 @@
         Something's not right, check your input.
       </p>
     {/if}
+
+    {#if currentSvgString?.length && !inputInvalid}
+      <p class="svg-preview-title">Preview</p>
+      <div class="svg-preview">
+        {#each currentSvgString.split(';') as item}
+          <div transition:slide class="svg-preview-item">{@html item}</div>
+        {/each}
+      </div>
+    {/if}
   </section>
 
   <section id="options">
@@ -239,5 +248,22 @@
     color: var(--error-color);
     font-size: var(--small-font-size);
     margin-top: 0.5rem;
+  }
+
+  .svg-preview {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .svg-preview-item {
+    width: 4rem;
+    height: 4rem;
+    padding: 0.1rem;
+    border: 1px solid var(--muted-color);
+    border-radius: 0.4rem;
+  }
+
+  .svg-preview-title {
+    margin: 0.5rem 0;
   }
 </style>
