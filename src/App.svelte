@@ -18,7 +18,8 @@
     doubleToSingleQuotes: true,
     batch: false,
     addMissingFillNone: true,
-    clearAfterCopyToClipboard: true,
+    clearAfterCopyToClipboard: false,
+    assignRandomIds: true,
   };
 
   let showCopiedToast = false;
@@ -126,6 +127,13 @@
       label="Batch-optimize and prepare for JSON"
       description="Separate items with a semicolon."
       bind:checked={options.batch}
+      clickEvent={() => setTimeout(optimizeSvg, 250)}
+    />
+
+    <ToggleSwitch
+      label="Randomize IDs"
+      description="Replaces every ID with a random GUID."
+      bind:checked={options.assignRandomIds}
       clickEvent={() => setTimeout(optimizeSvg, 250)}
     />
 

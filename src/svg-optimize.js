@@ -7,6 +7,7 @@ export const svgOptimize = (input, options) => {
         jsxifyAttributes,
         doubleToSingleQuotes,
         addMissingFillNone,
+        assignRandomIds,
     } = options;
 
     const result = optimize(input, {
@@ -74,8 +75,6 @@ export const svgOptimize = (input, options) => {
 
         const outputWithoutSkeleton = output.replace(beginning, '').replace(end, '').replaceAll('><', '>{}<');
 
-        console.log(outputWithoutSkeleton);
-
         const allMatches = outputWithoutSkeleton.split('{}');
 
         for (const match of allMatches) {
@@ -84,11 +83,25 @@ export const svgOptimize = (input, options) => {
                 continue;
             }
 
-            console.log(match);
             middle += match.replace(/\/>$/g, doubleToSingleQuotes ? " fill='none'/>" : " fill=\"none\"/>");
         }
 
         output = `${beginning}${middle}${end}`.replaceAll('  ', ' ');
+    }
+
+    if (assignRandomIds) {
+        const idTags = output.match(/id="(.*?)"|id='(.*?)'/gi);
+
+        for (const match of idTags) {
+            const idToReplace = match.slice(4, -1);
+            const newId = randomId();
+
+            output = output
+                .replaceAll(`id="${idToReplace}"`, `id="${newId}"`)
+                .replaceAll(`id='${idToReplace}'`, `id='${newId}'`)
+                .replaceAll(`"url(#${idToReplace})"`, `"url(#${newId})"`)
+                .replaceAll(`'url(#${idToReplace})'`, `'url(#${newId})'`);
+        }
     }
 
     return output;
@@ -100,3 +113,17 @@ const snakeToCamel = (str) =>
     .replace(/([-_][a-z])/g, (group) =>
         group.toUpperCase().replace('-', '').replace('_', '')
     );
+
+const randomId = () => {
+    if (!window.crypto.randomUUID) {
+        const rand = window.crypto.getRandomValues(new Uint32Array(5));
+        return [
+            rand[0].toString(36),
+            rand[1].toString(36),
+            rand[2].toString(36),
+            rand[3].toString(36)
+        ].join('-');
+    }
+
+    return window.crypto.randomUUID();
+}
