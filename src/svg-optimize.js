@@ -48,7 +48,7 @@ export const svgOptimize = (input, options) => {
     }
 
     if (jsxifyAttributes) {
-        const allMatches = output.matchAll(/([a-z]+\-[a-z]+)/g);
+        const allMatches = output.matchAll(/(?!\ )([a-z\-]*\-+[a-z]*)(?=\=)/g);
 
         let count = 0;
 
@@ -97,6 +97,6 @@ export const svgOptimize = (input, options) => {
 const snakeToCamel = (str) =>
     str
     .toLowerCase()
-    .replaceAll(/([-_][a-z])/g, (group) =>
+    .replace(/([-_][a-z])/g, (group) =>
         group.toUpperCase().replace('-', '').replace('_', '')
     );
