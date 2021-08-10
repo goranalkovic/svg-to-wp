@@ -92,15 +92,17 @@ export const svgOptimize = (input, options) => {
     if (assignRandomIds) {
         const idTags = output.match(/id="(.*?)"|id='(.*?)'/gi);
 
-        for (const match of idTags) {
-            const idToReplace = match.slice(4, -1);
-            const newId = randomId();
-
-            output = output
-                .replaceAll(`id="${idToReplace}"`, `id="${newId}"`)
-                .replaceAll(`id='${idToReplace}'`, `id='${newId}'`)
-                .replaceAll(`"url(#${idToReplace})"`, `"url(#${newId})"`)
-                .replaceAll(`'url(#${idToReplace})'`, `'url(#${newId})'`);
+        if (idTags) {
+            for (const match of idTags) {
+                const idToReplace = match.slice(4, -1);
+                const newId = randomId();
+    
+                output = output
+                    .replaceAll(`id="${idToReplace}"`, `id="${newId}"`)
+                    .replaceAll(`id='${idToReplace}'`, `id='${newId}'`)
+                    .replaceAll(`"url(#${idToReplace})"`, `"url(#${newId})"`)
+                    .replaceAll(`'url(#${idToReplace})'`, `'url(#${newId})'`);
+            }
         }
     }
 
