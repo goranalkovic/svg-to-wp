@@ -22,7 +22,7 @@
     bind:value
     on:input={inputEvent}
     maxlength="7"
-    minlength="7"
+    minlength="4"
   />
 
   {#if colorInvalid}
