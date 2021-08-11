@@ -6,7 +6,7 @@
   export let value;
   export let inputEvent;
 
-  $: colorInvalid = value.match(/\#{1}([a-fA-F0-9]{6}|[a-fA-F0-9]{3})/g) === null;
+  $: colorInvalid = value.match(/\#{1}[a-fA-F0-9]{6}/g) === null && value.match(/\#{1}[a-fA-F0-9]{3}/g) === null;
 </script>
 
 <label transition:slide class="color-input">
