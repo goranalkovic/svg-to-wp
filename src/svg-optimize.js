@@ -38,8 +38,6 @@ export const svgOptimize = (input, options) => {
     if (replaceColor) {
         const target = 'currentColor';
 
-        console.log(colorToReplace);
-        console.log(output);
         output = data
             .replaceAll(colorToReplace, target)
             .replaceAll(colorToReplace.toLowerCase(), target)
