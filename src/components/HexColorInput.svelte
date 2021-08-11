@@ -6,7 +6,7 @@
   export let value;
   export let inputEvent;
 
-  $: colorInvalid = value.match(/\#{1}[a-fA-F0-9]{6}/g) === null;
+  $: colorInvalid = value.match(/\#{1}([a-fA-F0-9]{6}|[a-fA-F0-9]{3})/g) === null;
 </script>
 
 <label transition:slide class="color-input">
@@ -27,7 +27,7 @@
 
   {#if colorInvalid}
     <small transition:slide class="color-input__error-text">
-      Color should start with a <code>#</code>, followed by any 6 letters
+      Color should start with a <code>#</code>, followed by any combination of 3/6 letters
       <code>A-F</code>
       or numbers <code>0-9</code>
     </small>
