@@ -25,7 +25,7 @@
   let showCopiedToast = false;
 
   $: colorInvalid =
-    options.colorToReplace.match(/\#{1}[a-fA-F0-9]{6}/g) === null;
+    options.colorToReplace.match(/\#{1}[a-fA-F0-9]{6}/g) === null && options.colorToReplace.match(/\#{1}[a-fA-F0-9]{3}/g) === null;
 
   // Methods.
   const optimizeSvg = () => {
