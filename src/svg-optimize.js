@@ -13,17 +13,17 @@ export const svgOptimize = (input, options) => {
     const result = optimize(input, {
         multipass: true,
         plugins: extendDefaultPlugins([{
-                name: 'cleanupListOfValues',
-                active: false
-            },
-            {
-                name: 'convertStyleToAttrs',
-                active: false
-            },
-            {
-                name: 'removeViewBox',
-                active: false
-            }
+            name: 'cleanupListOfValues',
+            active: false
+        },
+        {
+            name: 'convertStyleToAttrs',
+            active: false
+        },
+        {
+            name: 'removeViewBox',
+            active: false
+        }
         ])
     });
 
@@ -42,6 +42,13 @@ export const svgOptimize = (input, options) => {
             .replaceAll(colorToReplace, target)
             .replaceAll(colorToReplace.toLowerCase(), target)
             .replaceAll(colorToReplace.toUpperCase(), target);
+
+        if (colorToReplace.slice(1, 3) === colorToReplace.slice(3, 6)) {
+            output = data
+                .replaceAll(colorToReplace.slice(0, 3), target)
+                .replaceAll(colorToReplace.slice(0, 3).toLowerCase(), target)
+                .replaceAll(colorToReplace.slice(0, 3).toUpperCase(), target);
+        }
     }
 
     if (doubleToSingleQuotes) {
@@ -96,7 +103,7 @@ export const svgOptimize = (input, options) => {
             for (const match of idTags) {
                 const idToReplace = match.slice(4, -1);
                 const newId = randomId();
-    
+
                 output = output
                     .replaceAll(`id="${idToReplace}"`, `id="${newId}"`)
                     .replaceAll(`id='${idToReplace}'`, `id='${newId}'`)
@@ -111,10 +118,10 @@ export const svgOptimize = (input, options) => {
 
 const snakeToCamel = (str) =>
     str
-    .toLowerCase()
-    .replace(/([-_][a-z])/g, (group) =>
-        group.toUpperCase().replace('-', '').replace('_', '')
-    );
+        .toLowerCase()
+        .replace(/([-_][a-z])/g, (group) =>
+            group.toUpperCase().replace('-', '').replace('_', '')
+        );
 
 const randomId = () => {
     if (!window.crypto.randomUUID) {
