@@ -43,11 +43,11 @@ export const svgOptimize = (input, options) => {
             .replaceAll(colorToReplace.toLowerCase(), target)
             .replaceAll(colorToReplace.toUpperCase(), target);
 
-        if (colorToReplace.slice(1, 3) === colorToReplace.slice(3, 6)) {
+        if (colorToReplace.slice(1, 4) === colorToReplace.slice(4, 7)) {
             output = data
-                .replaceAll(colorToReplace.slice(0, 3), target)
-                .replaceAll(colorToReplace.slice(0, 3).toLowerCase(), target)
-                .replaceAll(colorToReplace.slice(0, 3).toUpperCase(), target);
+                .replaceAll(colorToReplace.slice(0, 4), target)
+                .replaceAll(colorToReplace.slice(0, 4).toLowerCase(), target)
+                .replaceAll(colorToReplace.slice(0, 4).toUpperCase(), target);
         }
     }
 
