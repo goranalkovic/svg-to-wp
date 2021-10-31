@@ -1,11 +1,13 @@
 <script>
+  import { slide } from 'svelte/transition';
+
   export let label;
-  export let description;
+  export let description = null;
   export let checked;
-  export let clickEvent;
+  export let clickEvent = null;
 </script>
 
-<label class="toggle-switch">
+<label class="toggle-switch" transition:slide>
   <span class="toggle-switch__label">{@html label}</span>
 
   {#if description}
@@ -48,6 +50,7 @@
   .toggle-switch__description {
     grid-area: description;
     font-size: var(--small-font-size);
+    opacity: 0.6;
   }
 
   :global(.toggle-switch__description code) {

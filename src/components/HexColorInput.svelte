@@ -2,9 +2,9 @@
   import { slide } from 'svelte/transition';
 
   export let label;
-  export let description;
+  export let description = null;
   export let value;
-  export let inputEvent;
+  export let inputEvent = null;
 
   $: colorInvalid = value.match(/\#{1}[a-fA-F0-9]{6}/g) === null && value.match(/\#{1}[a-fA-F0-9]{3}/g) === null;
 </script>
