@@ -51,10 +51,6 @@ export const svgOptimize = (input, options) => {
         }
     }
 
-    if (doubleToSingleQuotes) {
-        output = output.replaceAll('"', "'");
-    }
-
     if (jsxifyAttributes) {
         const allMatches = output.matchAll(/(?!\ )([a-z\-]*\-+[a-z]*)(?=\=)/g);
 
@@ -90,10 +86,10 @@ export const svgOptimize = (input, options) => {
                 continue;
             }
 
-            middle += match.replace(/\/>$/g, doubleToSingleQuotes ? " fill='none'/>" : " fill=\"none\"/>");
+            middle += match.replace(/\/>$/g, " fill=\"none\"/>");
         }
 
-        output = `${beginning}${middle}${end}`.replaceAll('  ', ' ');
+        output = `${middle}${skeleton}`.replaceAll('  ', ' ');
     }
 
     if (assignRandomIds) {
@@ -111,6 +107,10 @@ export const svgOptimize = (input, options) => {
                     .replaceAll(`'url(#${idToReplace})'`, `'url(#${newId})'`);
             }
         }
+    }
+
+    if (doubleToSingleQuotes) {
+        output = output.replaceAll('"', "'");
     }
 
     return output;

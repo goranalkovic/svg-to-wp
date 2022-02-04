@@ -1,23 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
 :root {
-    --font-family: sans-serif;
-    --code-font-family: monospace;
+    --font-family: 'Work Sans', sans-serif;
+    --code-font-family: 'Inconsolata', monospace;
     --base-font-size: 1rem;
-    --small-font-size: calc(var(--base-font-size) * 0.8);
+    --small-font-size: calc(var(--base-font-size) * 0.85);
     --large-font-size: calc(var(--base-font-size) * 1.25);
     --extra-large-font-size: calc(var(--base-font-size) * 3);
     --error-color: #D91223;
-    --active-color: #128CD9;
-    --active-color-dark: #0D71AF;
+    --active-color: #696BA7;
+    --active-color-dark: #8183cd;
     --inactive-color: #555555;
     --muted-color: #999999;
     --dark-color: #333333;
-    --white: #FFFFFF;
+    --white: #F5F5FF;
     --black: #111111;
 }
 
 @media (prefers-color-scheme: dark) {
      :root {
-        --white: #111111;
+        --white: #06060A;
         --black: #FFFFFF;
         --dark-color: #AAAAAA;
         --muted-color: #444444;
@@ -40,6 +43,11 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+body {
+    max-width: 110rem;
+    margin: 0 auto;
 }
 
 html,

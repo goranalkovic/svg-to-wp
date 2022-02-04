@@ -1,43 +1,98 @@
 <script>
   import { slide } from 'svelte/transition';
+  import Icon from './Icon.svelte';
 
   export let label;
   export let description = null;
   export let checked;
   export let clickEvent = null;
+  export let iconName = null;
+  export let filledIconOnActive = true;
+
+  const handleClick = (e) => {
+    checked = !checked;
+
+    clickEvent(e);
+  };
 </script>
 
-<label class="toggle-switch" transition:slide>
-  <span class="toggle-switch__label">{@html label}</span>
-
-  {#if description}
-    <span class="toggle-switch__description">{@html description}</span>
+<div
+  class="toggle-switch"
+  class:active={checked}
+  transition:slide
+  on:click|self={handleClick}
+>
+  {#if iconName}
+    <Icon name={iconName} isFilled={filledIconOnActive && checked} />
   {/if}
 
-  <div class="toggle-switch__switch" class:is-active={checked}>
-    <div class="toggle-switch__switch-thumb" />
+  <div class="toggle-switch__text">
+    <span class="toggle-switch__label">{@html label}</span>
+
+    {#if description}
+      <span class="toggle-switch__description">{@html description}</span>
+    {/if}
   </div>
 
-  <input
-    class="toggle-switch__input"
-    type="checkbox"
-    bind:checked
-    on:click={clickEvent}
-  />
-</label>
+  <div class="toggle-switch__content">
+    <slot />
+  </div>
+</div>
 
 <style>
   .toggle-switch {
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    grid-template-areas: 'label toggle' 'description toggle';
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'icon text content';
     align-items: center;
-    column-gap: 1rem;
-    row-gap: 0.1rem;
+    column-gap: 0.5rem;
     width: 100%;
+    cursor: pointer;
+    position: relative;
+
+    min-height: 3rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.5rem;
+
+    transition: 0.3s border-color ease-out;
   }
 
+  :global(.toggle-switch svg) {
+    color: var(--active-color);
+  }
+
+  .toggle-switch__text {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    flex-grow: 1;
+    pointer-events: none;
+    grid-area: text;
+  }
+
+  .toggle-switch__content {
+    grid-area: content;
+  }
+
+  .toggle-switch::before {
+    content: '';
+    position: absolute;
+    left: -0.125rem;
+    top: 12.5%;
+    height: 2rem;
+    width: 0.25rem;
+    border-radius: 0.25rem;
+    background-color: var(--active-color);
+    transition: 0.3s transform ease-out;
+    transform: scaleY(0);
+    transform-origin: center center;
+  }
+
+  .toggle-switch:hover {
+    border-color: var(--dark-color);
+  }
   .toggle-switch__label,
   .toggle-switch__description {
     user-select: none;
@@ -90,5 +145,12 @@
   .toggle-switch__switch.is-active .toggle-switch__switch-thumb {
     transform: translateX(1.35rem);
     background-color: var(--white);
+  }
+
+  .toggle-switch.active {
+    border-color: var(--muted-color);
+  }
+  :global(.toggle-switch.active::before) {
+    transform: scaleY(1);
   }
 </style>

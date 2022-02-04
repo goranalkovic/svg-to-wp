@@ -5,7 +5,6 @@
   import { svgOptimize } from './svg-optimize';
   import { slide } from 'svelte/transition';
   import ToggleSwitch from './components/ToggleSwitch.svelte';
-  import Separator from './components/Separator.svelte';
   import HexColorInput from './components/HexColorInput.svelte';
 
   // Dynamic variables.
@@ -247,24 +246,24 @@
     <h3>Options</h3>
 
     <ToggleSwitch
-      label="JSX-compatible attributes"
-      description="Converts attributes to <code>camelCase</code>"
+      label="Make attributes JSX-compatible (convert to <code>camelCase</code>)"
       bind:checked={options.jsxifyAttributes}
       clickEvent={() => setTimeout(optimizeSvg, 250)}
+      iconName='camelCase'
     />
 
     <ToggleSwitch
-      label="Convert quotes"
-      description="Converts double to single quotes"
+      label="Convert double to single quotes"
       bind:checked={options.doubleToSingleQuotes}
       clickEvent={() => setTimeout(optimizeSvg, 250)}
+      iconName='quote'
     />
 
     <ToggleSwitch
-      label="Add missing fills"
-      description="Adds <code>fill='none'</code> to elements which don't have it set."
+      label="Add <code>fill='none'</code> to elements which don't have it set."
       bind:checked={options.addMissingFillNone}
       clickEvent={() => setTimeout(optimizeSvg, 250)}
+      iconName='shapeFill'
     />
 
     {#if options.inputMode === 'text'}
@@ -273,47 +272,44 @@
         description="Separate items with a semicolon."
         bind:checked={options.batch}
         clickEvent={() => setTimeout(optimizeSvg, 250)}
+        iconName='jsonify'
       />
     {/if}
 
     {#if options.inputMode === 'file'}
       <ToggleSwitch
-        label="Use filenames as keys"
-        description="Uses filenames as object keys when multiple files are processed."
+        label="Use filenames as object keys"
         bind:checked={options.useFilenames}
         clickEvent={() => setTimeout(optimizeSvg, 250)}
+        iconName='documentFilename'
       />
     {/if}
 
     <ToggleSwitch
       label="Randomize IDs"
-      description="Replaces every ID with a random GUID."
       bind:checked={options.assignRandomIds}
       clickEvent={() => setTimeout(optimizeSvg, 250)}
+      iconName='hashtag'
     />
-
-    <Separator />
 
     <ToggleSwitch
-      label="Replace color"
-      description="Replaces selected color with <code>currentColor</code>."
+      label="Replace color with <code>currentColor</code>"
       bind:checked={options.replaceColor}
       clickEvent={() => setTimeout(optimizeSvg, 250)}
-    />
-
-    {#if options.replaceColor}
-      <HexColorInput
-        label="Color to replace"
-        bind:value={options.colorToReplace}
-        on:input={convertOnType}
-      />
-    {/if}
-
-    <Separator />
+      iconName='color'
+    >
+      {#if options.replaceColor}
+        <HexColorInput
+          bind:value={options.colorToReplace}
+          on:input={convertOnType}
+        />
+      {/if}
+    </ToggleSwitch>
 
     <ToggleSwitch
       label="Clear input after copying to clipboard"
       bind:checked={options.clearAfterCopyToClipboard}
+      iconName='textDismiss'
     />
   </section>
 
@@ -334,13 +330,13 @@
 <style>
   main {
     display: grid;
-    grid-template-columns: 1.5fr 30rem;
-    grid-template-rows: auto 1fr 1fr;
-    grid-template-areas: 'title title' 'input options' 'output output';
+    grid-template-columns: 32rem 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 'title title' 'input output' 'options output';
     padding: 3rem;
     row-gap: 1rem;
     column-gap: 2rem;
-    height: 100%;
+    height: 100vh;
     width: 100%;
   }
 
@@ -354,6 +350,8 @@
 
   h1 {
     grid-area: title;
+    font-weight: bold;
+    color: var(--active-color);
   }
   #input {
     grid-area: input;
@@ -364,6 +362,10 @@
 
   #options {
     grid-area: options;
+
+    display: grid;
+    grid-auto-flow: row;
+    gap: 0.5rem;
   }
 
   .output {
@@ -376,6 +378,9 @@
     width: 100%;
     transition: 0.3s border-color ease-out, 0.3s box-shadow ease-out;
     box-shadow: inset 0 1px 20px -10px transparent;
+    height: 100%;
+    overflow-y: auto;
+    max-height: 70vh;
   }
 
   .output:hover {
@@ -389,6 +394,7 @@
     font-family: monospace;
     width: 100%;
     display: block;
+    line-height: 1.5;
   }
 
   .error-text {
@@ -479,5 +485,9 @@
   :global(.file-upload:hover) {
     border-color: var(--active-color) !important;
     box-shadow: inset 0 1px 20px -10px var(--active-color);
+  }
+
+  #options h3 {
+    margin-bottom: 0.75rem;
   }
 </style>
