@@ -1,11 +1,39 @@
 <script>
   import throttle from 'just-throttle';
   import Dropzone from 'svelte-file-dropzone';
+  import { onMount } from 'svelte';
 
   import { svgOptimize } from './svg-optimize';
   import { slide } from 'svelte/transition';
   import ToggleSwitch from './components/ToggleSwitch.svelte';
   import HexColorInput from './components/HexColorInput.svelte';
+  import ThemeSwitcher from './components/ThemeSwitcher.svelte';
+
+  import { preferences, ThemeMode, prefersColorSchemeDark } from './stores';
+
+  $: isDay = $preferences.theme === ThemeMode.LIGHT;
+  $: isAuto = $preferences.theme === ThemeMode.AUTO;
+  $: isNight = !isDay && !isAuto;
+
+  let htmlElement;
+
+  onMount(() => {
+    htmlElement = document.documentElement;
+  });
+
+  $: {
+    if (htmlElement) {
+      const shouldBeDark =
+        ($preferences.theme === ThemeMode.AUTO && $prefersColorSchemeDark) ||
+        $preferences.theme === ThemeMode.DARK;
+
+      if (shouldBeDark) {
+        htmlElement?.classList?.add('dark');
+      } else {
+        htmlElement?.classList?.remove('dark');
+      }
+    }
+  }
 
   // Dynamic variables.
   let currentSvgString = '';
@@ -325,6 +353,10 @@
       {/if}
     </section>
   {/if}
+
+  <div class="theme-switcher">
+    <ThemeSwitcher />
+  </div>
 </main>
 
 <style>
@@ -332,7 +364,7 @@
     display: grid;
     grid-template-columns: 32rem 1fr;
     grid-template-rows: auto 1fr auto;
-    grid-template-areas: 'title title' 'input output' 'options output';
+    grid-template-areas: 'title mode-switch' 'input output' 'options output';
     padding: 3rem;
     row-gap: 1rem;
     column-gap: 2rem;
@@ -342,10 +374,16 @@
 
   @media (max-width: 56em) {
     main {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr auto;
       grid-template-rows: auto 1fr 1fr auto;
-      grid-template-areas: 'title' 'input' 'output' 'options';
+      grid-template-areas: 'title mode-switch' 'input input' 'output output' 'options options';
     }
+  }
+
+
+  .theme-switcher {
+    grid-area: mode-switch;
+    justify-self: flex-end;
   }
 
   h1 {
