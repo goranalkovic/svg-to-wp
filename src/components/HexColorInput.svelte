@@ -1,8 +1,6 @@
 <script>
   import { slide } from 'svelte/transition';
 
-  export let label;
-  export let description = null;
   export let value;
   export let inputEvent = null;
 
@@ -10,12 +8,6 @@
 </script>
 
 <label transition:slide class="color-input">
-  <span class="color-input__label">{@html label}</span>
-
-  {#if description}
-    <span class="color-input__description">{@html description}</span>
-  {/if}
-
   <input
     type="text"
     class="color-input__input"
@@ -27,9 +19,7 @@
 
   {#if colorInvalid}
     <small transition:slide class="color-input__error-text">
-      Color should start with a <code>#</code>, followed by any combination of 3/6 letters
-      <code>A-F</code>
-      or numbers <code>0-9</code>
+      Color should be in format <code>#ABC</code> / <code><div id="ABC123"></div></code> (0-9, A-F)
     </small>
   {/if}
 </label>
