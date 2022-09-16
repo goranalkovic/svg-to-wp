@@ -59,8 +59,10 @@
   .color-input__input {
     grid-area: input;
     font-family: var(--code-font-family);
-    width: 5.5rem;
-    font-size: var(--large-font-size);
+    width: 5.25rem;
+    font-size: calc(var(--base-font-size) * 1.25);
+    font-stretch: 98%;
+    font-weight: 420;
   }
 
   .color-input__error-text {

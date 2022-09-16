@@ -24,8 +24,14 @@
     $: rayOpacity = isAuto ? 0.4 : (isDay ? 1 : 0);
     $: starScale = isDay || isAuto ? 0 : 1.25;
 
+    $: metaAccent = isNight || (isAuto && window.matchMedia("(prefers-color-scheme: dark)").matches) ? '#0e0e1d' : '#f5f5ff';
+
     const transitonDuration = 'duration-500';
 </script>
+
+<svelte:head>
+    <meta name="theme-color" content={metaAccent}>
+</svelte:head>
 
 <button class="{extraClass} theme-switch-button" on:click={toggleTheme} aria-label="Toggle website theme" >
     <svg class="theme-switch-button__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

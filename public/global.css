@@ -1,13 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+@font-face {
+  src: url(RobotoFlex.ttf);
+  font-family: 'Roboto Flex';
+  font-weight: 100 1000;
+  font-stretch: 25% 151%;
+  font-style: oblique -10deg 0deg;
+  font-display: swap;
+}
+
+@font-face {
+  src: url(SudoVariable.ttf);
+  font-family: 'Sudo';
+  font-style: italic;
+  font-weight: 72 700;
+  font-display: swap;
+  font-synthesis: none;
+}
 
 :root {
-  --font-family: 'Work Sans', sans-serif;
-  --code-font-family: 'Inconsolata', monospace;
+  --font-family: 'Roboto Flex', system-ui, sans-serif;
+  --code-font-family: 'Sudo', monospace;
   --base-font-size: 1rem;
   --small-font-size: calc(var(--base-font-size) * 0.85);
-  --large-font-size: calc(var(--base-font-size) * 1.25);
-  --extra-large-font-size: calc(var(--base-font-size) * 3);
+  --large-font-size: calc(var(--base-font-size) * 1.5);
+  --extra-large-font-size: calc(var(--base-font-size) * 4.5);
   --error-color: #d91223;
   --active-color: #696ba7;
   --active-color-dark: #8183cd;
@@ -19,7 +34,7 @@
 }
 
 .dark {
-  --white: #06060a;
+  --white: #0e0e1d;
   --black: #ffffff;
   --dark-color: #aaaaaa;
   --muted-color: #444444;
@@ -28,6 +43,7 @@
 
 * {
   box-sizing: border-box;
+  font-synthesis: none;
 }
 
 html {
@@ -41,11 +57,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-body {
-  max-width: 110rem;
-  margin: 0 auto;
 }
 
 html,
@@ -73,6 +84,7 @@ span {
   padding: 0;
   font-weight: 400;
   color: var(--black);
+  font-optical-sizing: auto;
 }
 
 p,
@@ -101,13 +113,22 @@ textarea:active {
 
 h3 {
   font-size: var(--large-font-size);
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 1.5rem;
+
+  font-stretch: 150%;
+  font-variation-settings: 'GRAD' 43, 'slnt' 0, 'XTRA' 468, 'XOPQ' 96, 'YOPQ' 79,
+    'YTLC' 1000, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 
 h1 {
   font-size: var(--extra-large-font-size);
-  font-weight: 400;
+  font-style: oblique -4deg;
+  font-weight: 750;
+
+  font-stretch: 45%;
+  font-variation-settings: 'GRAD' -100, 'slnt' -4, 'XTRA' 468, 'XOPQ' 96,
+    'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 
 .flex-between {
@@ -136,6 +157,10 @@ button {
   cursor: pointer;
   transition: 0.3s color ease-out, 0.3s border-color ease-out,
     0.3s background-color ease-out;
+
+  font-stretch: 105%;
+  font-variation-settings: 'GRAD' 43, 'slnt' 0, 'XTRA' 468, 'XOPQ' 96, 'YOPQ' 79,
+    'YTLC' 800, 'YTUC' 1000, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 
 button:hover,
@@ -147,4 +172,62 @@ button:focus {
 
 button:active {
   background-color: var(--active-color-dark);
+}
+
+.splitpanes,
+.splitpanes__pane {
+	background-color: transparent !important;
+}
+
+.splitpanes__splitter {
+	background-color: var(--white) !important;
+  border-color: transparent !important;
+  border-radius: 100rem;
+
+  transition: 0.3s background-color ease;
+}
+
+.splitpanes__splitter:hover {
+  background-color: var(--active-color) !important;
+}
+
+.splitpanes__splitter::before {
+  opacity: 0.1;
+}
+
+.splitpanes--vertical > .splitpanes__splitter::before {
+height: 100% !important;
+width: 1px !important;
+transform: translateX(50%) translateY(-50%) !important;
+}
+
+.splitpanes--vertical > .splitpanes__splitter::after {
+  margin-left: -0.5px !important;
+  width: 0.25rem !important;
+  border-radius: 100rem !important;
+  transform: translateX(-50%) translateY(-50%) !important;
+}
+
+.splitpanes--horizontal > .splitpanes__splitter::before {
+  width: 100% !important;
+  margin-top: -0.5px !important;
+  height: 1px !important;
+  border-radius: 100rem !important;
+  transform: translateX(-50%) translateY(-50%) !important;
+}
+
+.splitpanes--horizontal > .splitpanes__splitter::after {
+  margin-top: 0 !important;
+  height: 0.25rem !important;
+  border-radius: 100rem !important;
+  transform: translateY(-50%) !important;
+}
+
+.splitpanes__splitter::before,
+.splitpanes__splitter::after {
+	background-color: var(--active-color) !important;
+}
+
+.splitpanes__splitter:hover::after {
+  background-color: var(--white) !important;
 }
