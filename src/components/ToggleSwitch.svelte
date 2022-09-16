@@ -1,7 +1,6 @@
 <script>
   import { slide } from 'svelte/transition';
   import Icon from './Icon.svelte';
-  import { Confetti } from 'svelte-confetti';
 
   export let label;
   export let description = null;
@@ -51,7 +50,7 @@
     cursor: pointer;
     position: relative;
 
-    max-width: 26.25rem; // 420px
+    max-width: 26.25rem;
 
     min-height: 3rem;
     border: 1px solid transparent;
