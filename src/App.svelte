@@ -287,7 +287,7 @@
           </Pane>
           <Pane
             minSize={finalOutput?.length > 0 ? 40 : 15}
-            maxSize={finalOutput?.length > 0 ? 40 : 25}
+            maxSize={finalOutput?.length > 0 ? 40 : 35}
             size={finalOutput?.length > 0 ? 40 : 25}
           >
             <section id="options">

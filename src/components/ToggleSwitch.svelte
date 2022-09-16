@@ -51,6 +51,8 @@
     cursor: pointer;
     position: relative;
 
+    max-width: 26.25rem; // 420px
+
     min-height: 3rem;
     border: 1px solid transparent;
     border-radius: 0.5rem;
