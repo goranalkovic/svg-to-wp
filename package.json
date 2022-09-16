@@ -21,7 +21,9 @@
     "just-throttle": "^2.3.1",
     "sirv-cli": "^1.0.14",
     "svelte-file-dropzone": "0.0.15",
+    "svelte-french-toast": "^1.0.3",
     "svelte-local-storage-store": "^0.2.6",
+    "svelte-splitpanes": "^0.7.3",
     "svgo": "^2.7.0"
   }
 }
