@@ -1,0 +1,27 @@
+{
+"name": "SVG2WP",
+"short_name": "SVG2WP",
+"start_url": "/",
+"display": "standalone",
+"description": "A simple tool to prepare SVG icons for Gutenberg.",
+"lang": "en-US",
+"dir": "auto",
+"theme_color": "#F5F5FF",
+"background_color": "#F5F5FF",
+"orientation": "any",
+"prefer_related_applications": true,
+"icons": [
+    {
+        "src": "/icon512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable"
+    },
+    {
+        "src": "/icon192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+    }
+]
+}

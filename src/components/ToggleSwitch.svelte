@@ -1,13 +1,14 @@
 <script>
   import { slide } from 'svelte/transition';
   import Icon from './Icon.svelte';
+  import { Confetti } from 'svelte-confetti';
 
   export let label;
   export let description = null;
   export let checked;
   export let clickEvent = null;
   export let iconName = null;
-  export let filledIconOnActive = true;
+  export let filledIconOnActive = false;
 
   const handleClick = (e) => {
     checked = !checked;
@@ -23,7 +24,7 @@
   on:click|self={handleClick}
 >
   {#if iconName}
-    <Icon name={iconName} isFilled={filledIconOnActive && checked} />
+      <Icon name={iconName} isFilled={filledIconOnActive && checked} />
   {/if}
 
   <div class="toggle-switch__text">
@@ -70,6 +71,8 @@
     flex-grow: 1;
     pointer-events: none;
     grid-area: text;
+
+    font-stretch: 40%;
   }
 
   .toggle-switch__content {
@@ -152,5 +155,16 @@
   }
   :global(.toggle-switch.active::before) {
     transform: scaleY(1);
+  }
+
+  :global(.toggle-switch__label code) {
+    color: var(--active-color-dark);
+    font-size: calc(var(--base-font-size) * 1.15);
+    font-family: var(--code-font-family);
+    font-weight: 380;
+    font-variation-settings: 'ital' 0.48;
+    font-style: italic;
+    filter: saturate(0.25) contrast(125%);
+    letter-spacing: -0.025em;
   }
 </style>
