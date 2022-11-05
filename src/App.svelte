@@ -1,4 +1,5 @@
 <script>
+	// @ts-nocheck
 	import throttle from 'just-throttle';
 	import Dropzone from 'svelte-file-dropzone';
 	import toast, { Toaster } from 'svelte-french-toast';
@@ -50,14 +51,14 @@
 			passedOptions.replaceColor = false;
 		}
 
-		if (options.batch && currentSvgString.includes(';')) {
-			const splitString = currentSvgString.split(';');
+		if (options.batch && currentSvgString.includes('|')) {
+			const splitString = currentSvgString.split('|');
 
 			finalOutput = '';
 			splitString.forEach((itemToProcess, i) => {
 				const optimized = svgOptimize(itemToProcess, passedOptions);
 
-				const newName = uploadedImages[i]?.name?.replace('.svg', '');
+				const newName = uploadedImages[i]?.name?.replace('.svg', '') ?? 'name';
 
 				if (options.useFilenames) {
 					finalOutput += options.jsxifyAttributes ? `${newName}: ${optimized},\n` : `"${newName}" : "${optimized}",\n`;
@@ -187,19 +188,19 @@
 			<ThemeSwitcher />
 
 			<OptionsPanel>
-				<OptionToggle bind:checked={options.jsxifyAttributes} label="camelCase attributes" description="Useful for icons as React components (JSX)" />
-				<OptionToggle bind:checked={options.doubleToSingleQuotes} label="Convert double to single quotes" />
-				<OptionToggle bind:checked={options.addMissingFillNone} label="Add missing fills" description="Useful if WordPress adds weird fills to your icons" />
+				<OptionToggle clickEvent={() => optimizeSvg()} bind:checked={options.jsxifyAttributes} label="camelCase attributes" description="Useful for icons as React components (JSX)" />
+				<OptionToggle clickEvent={() => optimizeSvg()} bind:checked={options.doubleToSingleQuotes} label="Convert double to single quotes" />
+				<OptionToggle clickEvent={() => optimizeSvg()} bind:checked={options.addMissingFillNone} label="Add missing fills" description="Useful if WordPress adds weird fills to your icons" />
 
 				{#if options.inputMode === 'file'}
-					<OptionToggle bind:checked={options.useFilenames} label="Use filenames as object keys" />
+					<OptionToggle clickEvent={() => optimizeSvg()} bind:checked={options.useFilenames} label="Use filenames as object keys" />
 				{:else}
-					<OptionToggle bind:checked={options.batch} label="Process multiple icons at once" description="Separate items with a semicolon" />
+					<OptionToggle clickEvent={() => optimizeSvg()} bind:checked={options.batch} label="Process multiple icons at once" description="Separate items with <code>|</code> (<i>pipe</i>)" />
 				{/if}
 
 				<hr class="mt-4 border-gray-100 dark:border-primary-700" />
 
-				<OptionToggle bind:checked={options.replaceColor} label="Replace a color with currentColor" />
+				<OptionToggle clickEvent={() => optimizeSvg()} bind:checked={options.replaceColor} label="Replace a color with currentColor" />
 
 				{#if options.replaceColor}
 					<div class="pt-1.5">
@@ -208,13 +209,13 @@
 				{/if}
 
 				<hr class="mt-4 border-gray-100 dark:border-primary-700" />
-				
-				<OptionToggle bind:checked={options.clearAfterCopyToClipboard} label="Auto-clear after copying output" />
+
+				<OptionToggle clickEvent={() => optimizeSvg()} bind:checked={options.clearAfterCopyToClipboard} label="Auto-clear after copying output" />
 
 				<hr class="mt-4 border-gray-100 dark:border-primary-700" />
 
 				<p class="text-xs mt-4 text-primary-600 dark:text-primary-400 font-extralight tracking-wider">
-					SVG2WP v3.0 <br />
+					SVG2WP v3.0.1 <br />
 					<a href="https://goranalkovic.com">&copy; Goran Alković, 2022</a>
 				</p>
 			</OptionsPanel>
@@ -288,7 +289,7 @@
 								</div>
 							{/each}
 						{:else}
-							{#each currentSvgString.split(';') as item}
+							{#each currentSvgString.split('|') as item}
 								<div class="shrink-0 w-20 aspect-square p-2 border border-primary-200 dark:border-primary-600 rounded">
 									<div class="item-preview">
 										{@html item}
