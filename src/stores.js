@@ -1,4 +1,4 @@
-import {get, readable } from "svelte/store";
+import { readable } from "svelte/store";
 import { writable } from 'svelte-local-storage-store'
 
 export const reducedMotion = readable(false, (set) => {
@@ -41,4 +41,5 @@ export const ThemeMode = {
 
 export const preferences = writable('preferences', {
     theme: ThemeMode.AUTO,
+    scrollbarTheme: 'os-theme-dark',
 });

@@ -1,0 +1,52 @@
+/* Write your global styles here, in PostCSS syntax */
+
+@tailwind base;
+
+@font-face {
+	src: url(RobotoFlex.ttf);
+	font-family: 'Roboto Flex';
+	font-weight: 100 1000;
+	font-stretch: 25% 151%;
+	font-style: oblique -10deg 0deg;
+	font-display: swap;
+}
+
+@font-face {
+	src: url(SudoVariable.ttf);
+	font-family: 'Sudo';
+	font-style: italic;
+	font-weight: 72 700;
+	font-display: swap;
+	font-synthesis: none;
+}
+
+h2 {
+	font-stretch: 150%;
+	font-variation-settings: 'GRAD' 43, 'slnt' 0, 'XTRA' 468, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 1000, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
+}
+
+.file-dropzone {
+	background-color: transparent !important;
+	border: none !important;
+	height: 10rem;
+
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex-direction: row !important;
+}
+
+.item-preview svg {
+	width: 100%;
+	height: 100%;
+	aspect-ratio: 1;
+}
+
+.masked-output-preview {
+	-webkit-mask-image: linear-gradient(black, transparent);
+	mask-image: linear-gradient(black, transparent);
+}
+
+@tailwind components;
+
+@tailwind utilities;

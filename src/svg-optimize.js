@@ -1,4 +1,4 @@
-import { optimize, extendDefaultPlugins } from './svgo';
+import { optimize } from 'https://cdn.jsdelivr.net/npm/svgo@3.0.0/dist/svgo.browser.js';
 
 export const svgOptimize = (input, options) => {
     const {
@@ -12,19 +12,32 @@ export const svgOptimize = (input, options) => {
 
     const result = optimize(input, {
         multipass: true,
-        plugins: extendDefaultPlugins([{
-            name: 'cleanupListOfValues',
-            active: false
-        },
-        {
-            name: 'convertStyleToAttrs',
-            active: false
-        },
-        {
-            name: 'removeViewBox',
-            active: false
-        }
-        ])
+        plugins: [
+            {
+                name: 'preset-default',
+                params: {
+                    overrides: {
+                        removeViewBox: false,
+                    }
+                }
+            },
+        ]
+        // params: {
+        //     overrides: {
+        //         {
+        //             name: 'cleanupListOfValues',
+        //             active: false
+        //         },
+        //         {
+        //             name: 'convertStyleToAttrs',
+        //             active: false
+        //         },
+        //         {
+        //             name: 'removeViewBox',
+        //             active: false
+        //         }
+        //     }
+        //   }
     });
 
     const { data } = result;
