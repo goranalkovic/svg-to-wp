@@ -130,7 +130,7 @@
 	function updateUploadedContent() {
 		currentSvgString = uploadedImages
 			.map(({ content }) => content)
-			.join(';')
+			.join('|')
 			.trim();
 		options.batch = (uploadedImages?.length ?? 0) > 1;
 		optimizeSvg();
@@ -215,7 +215,7 @@
 				<hr class="mt-4 border-gray-100 dark:border-primary-700" />
 
 				<p class="text-xs mt-4 text-primary-600 dark:text-primary-400 font-extralight tracking-wider">
-					SVG2WP v3.0.1 <br />
+					SVG2WP v3.0.2 <br />
 					<a href="https://goranalkovic.com">&copy; Goran Alković, 2022</a>
 				</p>
 			</OptionsPanel>
