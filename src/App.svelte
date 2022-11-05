@@ -19,6 +19,7 @@
 
 	import { scrollbar } from './scrollbars';
 	import { svgOptimize } from './svg-optimize';
+  import { camelize } from './helpers';
 
 	// Dynamic variables.
 	let currentSvgString = '';
@@ -58,7 +59,7 @@
 			splitString.forEach((itemToProcess, i) => {
 				const optimized = svgOptimize(itemToProcess, passedOptions);
 
-				const newName = uploadedImages[i]?.name?.replace('.svg', '') ?? 'name';
+				const newName = camelize(uploadedImages[i]?.name?.replace('.svg', '') ?? 'name');
 
 				if (options.useFilenames) {
 					finalOutput += options.jsxifyAttributes ? `${newName}: ${optimized},\n` : `"${newName}" : "${optimized}",\n`;
@@ -215,7 +216,7 @@
 				<hr class="mt-4 border-gray-100 dark:border-primary-700" />
 
 				<p class="text-xs mt-4 text-primary-600 dark:text-primary-400 font-extralight tracking-wider">
-					SVG2WP v3.0.2 <br />
+					SVG2WP v3.0.3 <br />
 					<a href="https://goranalkovic.com">&copy; Goran Alković, 2022</a>
 				</p>
 			</OptionsPanel>
