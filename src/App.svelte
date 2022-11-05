@@ -216,7 +216,7 @@
 				<hr class="mt-4 border-gray-100 dark:border-primary-700" />
 
 				<p class="text-xs mt-4 text-primary-600 dark:text-primary-400 font-extralight tracking-wider">
-					SVG2WP v3.0.3 <br />
+					SVG2WP v3.0.4 <br />
 					<a href="https://goranalkovic.com">&copy; Goran Alković, 2022</a>
 				</p>
 			</OptionsPanel>
