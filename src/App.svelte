@@ -19,7 +19,9 @@
 
 	import { scrollbar } from './scrollbars';
 	import { svgOptimize } from './svg-optimize';
-  import { camelize } from './helpers';
+	import { camelize } from './helpers';
+
+	let audio;
 
 	// Dynamic variables.
 	let currentSvgString = '';
@@ -72,15 +74,22 @@
 		}
 
 		inputInvalid = finalOutput === '';
+
+		if (audio && inputInvalid && currentSvgString?.length > 0) {
+			audio.src = 'sounds/error.mp3';
+			audio?.play();
+		}
 	};
 
 	const convertOnType = throttle(() => optimizeSvg(), 500);
 
 	const copyToClipboard = () => {
 		if (!navigator?.clipboard) {
-			toast.success('Error copying to clipboard', {
+			toast.error('Error copying to clipboard', {
 				position: 'bottom-center',
 			});
+			audio.src = 'sounds/error.mp3';
+			audio?.play();
 			return;
 		}
 
@@ -89,6 +98,9 @@
 		toast.success('Copied to clipboard!', {
 			position: 'bottom-center',
 		});
+
+		audio.src = 'sounds/tada.mp3';
+		audio?.play();
 
 		if (options.clearAfterCopyToClipboard) {
 			clearData();
@@ -216,8 +228,8 @@
 				<hr class="mt-4 border-gray-100 dark:border-primary-700" />
 
 				<p class="text-xs mt-4 text-primary-600 dark:text-primary-400 font-extralight tracking-wider">
-					SVG2WP v3.0.4 <br />
-					<a href="https://goranalkovic.com">&copy; Goran Alković, 2022</a>
+					SVG2WP v3.0.5 <br />
+					<a href="https://goranalkovic.com">&copy; Goran Alković, 2023</a>
 				</p>
 			</OptionsPanel>
 		</div>
@@ -235,8 +247,13 @@
 			</div>
 			<button
 				class="mt-8 px-1.5 py-1 rounded transition border border-primary-100 dark:border-primary-800 text-sm text-primary-600 dark:text-primary-500 select-none focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/50 focus-visible:border-primary-500 dark:focus-visible:border-primary-700"
-				on:click|preventDefault|stopPropagation={() => (options.inputMode = 'text')}>Enter SVG code instead</button
-			>
+				on:click|preventDefault|stopPropagation={() => {
+					options.inputMode = 'text';
+					audio.src = 'sounds/click-2.mp3';
+					audio?.play();
+				}}>
+					Enter SVG code instead
+				</button>
 		{:else}
 			<div in:slide>
 				<textarea
@@ -258,6 +275,9 @@
 				<button
 					on:click={() => {
 						options.inputMode = 'file';
+
+						audio.src = 'sounds/click-3.mp3';
+						audio?.play();
 						clearData();
 					}}
 					class="mx-auto mt-8 px-1.5 py-1 rounded transition border border-primary-100 dark:border-primary-800 text-sm text-primary-600 dark:text-primary-500 select-none focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/50 focus-visible:border-primary-500 dark:focus-visible:border-primary-700"
@@ -284,7 +304,15 @@
 										</div>
 									</div>
 
-									<button class="inline-block mx-auto mb-1 text-primary-400 hover:text-red-500 dark:text-primary-700 dark:hover:text-red-400 transition" on:click={() => removeFile(i)}>
+									<button
+										class="inline-block mx-auto mb-1 text-primary-400 hover:text-red-500 dark:text-primary-700 dark:hover:text-red-400 transition"
+										on:click={() => {
+											removeFile(i);
+										
+											audio.src = 'sounds/delete.mp3';
+											audio?.play();
+										}}
+									>
 										<Delete class="w-5" />
 									</button>
 								</div>
@@ -314,5 +342,7 @@
 		</section>
 	{/if}
 </main>
+
+<audio src="/sounds/click-2.mp3" bind:this={audio} preload="metadata"></audio>
 
 <Toaster />

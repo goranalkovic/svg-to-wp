@@ -30,6 +30,9 @@
 
 	const setThemeMode = (mode) => {
 		preferences.set({ ...$preferences, theme: mode });
+
+		audio.src = '/sounds/click-2.mp3';
+		audio?.play();
 	};
 
 	$: isLight = $preferences.theme === ThemeMode.LIGHT;
@@ -37,9 +40,6 @@
 	$: isDark = !isLight && !isAuto;
 
 	$: metaAccent = isDark || (isAuto && window.matchMedia('(prefers-color-scheme: dark)').matches) ? '#151521' : '#f0f0f6';
-	
-	
-	
 
 	/**
 	 * @param {(string | false | null | undefined)[]} classes
@@ -59,6 +59,20 @@
 			!disabled && 'theme-is-inactive'
 		);
 	}
+
+	let audio;
+	let open = false;
+
+	const toggleOpen = () => {
+		open = !open;
+
+		if (!audio) {
+			return;
+		}
+
+		audio.src = open ? '/sounds/click-1.mp3' : '/sounds/click-4.mp3';
+		audio?.play();
+	};	
 </script>
 
 <svelte:head>
@@ -95,6 +109,8 @@
 			leave="transition duration-500 ease-out"
 			leaveFrom="transform scale-100 opacity-100"
 			leaveTo="transform scale-95 opacity-0"
+			on:beforeEnter={() => toggleOpen()}
+			on:afterLeave={() => toggleOpen()}
 		>
 			<MenuItems
 				class="absolute right-0 w-44 mt-2 origin-top-right bg-white dark:bg-primary-800 border border-gray-200 dark:border-primary-700 divide-y divide-gray-100 dark:divide-primary-700 rounded-md shadow-lg dark:shadow-primary-800/40 outline-none overflow-hidden"
@@ -131,3 +147,5 @@
 		transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 </style>
+
+<audio src="/sounds/click-1.mp3" bind:this={audio} preload="metadata"></audio>

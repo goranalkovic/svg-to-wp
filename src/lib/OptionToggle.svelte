@@ -12,6 +12,8 @@
 	export let label;
 	export let description = null;
 	export let clickEvent = null;
+
+	let audio;
 </script>
 
 <SwitchGroup as="div" class="flex items-center gap-3 justify-between pt-4">
@@ -28,8 +30,10 @@
 		{checked}
 		on:change={(event) => {
 			checked = event.detail;
-
+			
 			if (clickEvent) {
+				audio.src = checked ? '/sounds/click-3.mp3' : '/sounds/click-2.mp3';
+				audio?.play();
 				clickEvent(event);
 			}
 		}}
@@ -48,3 +52,5 @@
 		/>
 	</Switch>
 </SwitchGroup>
+
+<audio src="/sounds/click-2.mp3" bind:this={audio} preload="metadata"></audio>
